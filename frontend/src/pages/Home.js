@@ -4,6 +4,7 @@ import { getAllCategories} from "../features/categories/categoriesSlice";
 import { Text } from "@chakra-ui/layout";
 import { Link, Box } from "@chakra-ui/react";
 import CategoryItem from "../components/CategoryItem";
+import Search from "../components/Forms/Search";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const Home = () => {
   return (
     <>
       <Text>Home</Text>
+      <Search />
         {categories.length ? (
           categories.map((cat) => {
             return (
