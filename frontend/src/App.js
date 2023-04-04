@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Navbar from "./components/Navbar";
 import CatgeoryServicesTemplate from "./pages/ServicesListByCategoryPage";
 import ServicesTemplate from "./pages/SingleServicePage.js"
+import Search from "./components/Forms/Search";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Router>
         <div className="container">
           <Navbar />
+          <Search />
           <Routes>
           <Route path='/' element={<Home />} />
             <Route path="/register" element={<Registration />} />

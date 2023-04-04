@@ -25,8 +25,6 @@ const Home = () => {
 
   return (
     <>
-      <Text>Home</Text>
-      <Search />
       {categories.length ? (
         categories.map((cat) => {
           return <CategoryLink key={cat._id} category={cat} />;
