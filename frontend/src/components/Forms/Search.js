@@ -18,7 +18,7 @@ const Search = () => {
   const queryServices = (value) => {
     try {
       axios
-        .get(process.env.REACT_APP_API_SVC_URL + "search/" + value)
+        .get("/services/search/" + value)
         .then((response) => {
           let searchResults = response.data.map((item) => {
             return item;
