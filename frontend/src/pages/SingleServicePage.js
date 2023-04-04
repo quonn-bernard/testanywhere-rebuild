@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Button } from "@chakra-ui/react";
 import { Text, Box } from "@chakra-ui/layout";
 import { getLabServiceBySlug } from "../features/services/servicesSlice";
 import SingleService from "../components/SingleService";
+import DefaultButton from "../components/Buttons/DefaultButton";
 
 const Service = () => {
   const dispatch = useDispatch();
@@ -26,10 +26,10 @@ const Service = () => {
     }
   }, [dispatch, isError, message, slug]);
 
-//   const handleClick = () => {
-//     localStorage.setItem("serviceID", JSON.stringify(currentService["0"]._id));
-//     navigate("/services/appointment1");
-//   };
+  const handleClick = () => {
+    localStorage.setItem("serviceID", JSON.stringify(currentService["0"]._id));
+    navigate("/appointments/schedule-appointment");
+  };
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -39,23 +39,13 @@ const Service = () => {
     <>
       {currentService.length ? (
         currentService.map((svc) => {
-          return (
-            <SingleService key={svc._id} service={svc} />
-          );
+          return <SingleService key={svc._id} service={svc} />;
         })
       ) : (
         <Text>No services found to display!...</Text>
       )}
 
-      {/* <Button
-        variant={"solid"}
-        colorScheme={"teal"}
-        size={"sm"}
-        mr={4}
-        onClick={() => handleClick()}
-      >
-        Schedule Lab Test
-      </Button> */}
+      <DefaultButton text="Schedule a Lab Test" cb={handleClick} />
     </>
   );
 };
