@@ -7,7 +7,7 @@ import {
   getServicesBySearchTerm,
   getServicesByCategory
 } from "../controllers/serviceController.js";
-import protect from "../middleware/authMiddleWare.js";
+// import protect from "../middleware/authMiddleWare.js";
 
 serviceRouter.post("/", addServices);
 serviceRouter.get("/", getAllServices);
