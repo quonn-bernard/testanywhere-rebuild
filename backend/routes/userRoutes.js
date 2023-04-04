@@ -8,7 +8,6 @@ import {
   updateUserPassword,
 } from "../controllers/userController.js";
 
-
 userRouter.get("/", (req, res) => {
   res.status(200).json({ message: "users hit" });
 });
