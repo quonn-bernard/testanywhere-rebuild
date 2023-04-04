@@ -16,7 +16,7 @@ export const ServicesList = ({ payload }) => {
             );
           })
         ) : (
-          <Text>Nothing to display...</Text>
+          <Text>Nothing to display....</Text>
         )}
       </>
     );
@@ -36,7 +36,7 @@ export const ServicesList = ({ payload }) => {
             );
           })
         ) : (
-          <Text>Nothing to display...</Text>
+          <Text>Nothing to display....</Text>
         )}
       </>
     );
