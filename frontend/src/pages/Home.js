@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllCategories} from "../features/categories/categoriesSlice";
+import { getAllCategories } from "../features/categories/categoriesSlice";
 import { Text } from "@chakra-ui/layout";
 import { Link, Box } from "@chakra-ui/react";
-import CategoryItem from "../components/CategoryItem";
+import CategoryLink from "../components/CategoryLink";
 import Search from "../components/Forms/Search";
 
 const Home = () => {
@@ -27,18 +27,14 @@ const Home = () => {
     <>
       <Text>Home</Text>
       <Search />
-        {categories.length ? (
-          categories.map((cat) => {
-            return (
-                <Box key={cat._id}>
-              <CategoryItem category={cat} />
-              </Box>
-            );
-          })
-        ) : (
-          <Text>No categories to display...</Text>
-        )}
-      </>
+      {categories.length ? (
+        categories.map((cat) => {
+          return <CategoryLink key={cat._id} category={cat} />;
+        })
+      ) : (
+        <Text>No categories to display...</Text>
+      )}
+    </>
   );
 };
 

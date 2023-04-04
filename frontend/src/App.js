@@ -3,6 +3,8 @@ import Registration from "./pages/Registration";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Navbar from "./components/Navbar";
+import CatgeoryServicesTemplate from "./pages/ServicesListByCategoryPage";
+import ServicesTemplate from "./pages/SingleServicePage.js"
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <Route path='/' element={<Home />} />
             <Route path="/register" element={<Registration />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/categories/:slug" element={<CatgeoryServicesTemplate />} />
+            <Route path="/services/:slug" element={<ServicesTemplate />} />
           </Routes>
         </div>
       </Router>

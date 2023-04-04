@@ -3,7 +3,8 @@ import {
   createServiceService,
   getAllServicesService,
   getServiceBySlugService,
-  getServicesBySearchTermService
+  getServicesBySearchTermService,
+  getServicesByCategoryService,
 } from "../services/serviceService.js";
 
 const addServices = asyncHandler(async (req, res) => {
@@ -35,13 +36,29 @@ const getServiceBySlug = asyncHandler(async (req, res) => {
 });
 
 const getServicesBySearchTerm = asyncHandler(async (req, res) => {
-    const searchTerm = req.params.searchTerm;
-    try {
-      const services = await getServicesBySearchTermService(searchTerm);
-      res.status(200).json(services);
-    } catch (error) {
-      res.status(400).json({ message: error.message });
-    }
-  });
+  const searchTerm = req.params.searchTerm;
+  try {
+    const services = await getServicesBySearchTermService(searchTerm);
+    res.status(200).json(services);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
 
-export { addServices, getAllServices, getServiceBySlug, getServicesBySearchTerm };
+const getServicesByCategory = asyncHandler(async (req, res) => {
+  const category = req.params.category;
+  try {
+    const services = await getServicesByCategoryService(category);
+    res.status(200).json(services);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+});
+
+export {
+  addServices,
+  getAllServices,
+  getServiceBySlug,
+  getServicesBySearchTerm,
+  getServicesByCategory,
+};

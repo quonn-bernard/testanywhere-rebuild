@@ -35,7 +35,7 @@ const Search = () => {
       <Input
         value={value}
         onChange={handleChange}
-        placeholder="Here is a sample placeholder"
+        placeholder="Type to search our lab services"
         size="sm"
       />
       <Box mb={"2em"}>
