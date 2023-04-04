@@ -108,7 +108,7 @@ const Navbar = () => {
                   size={"sm"}
                   mr={4}
                 >
-                  Schedule Lab Test
+                  Schedule A Lab Test
                 </Button>
               </Link>
             </Menu>
