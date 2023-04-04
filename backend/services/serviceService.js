@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Service from "../models/serviceModel.js";
+import Category from "../models/categoryModel.js";
 import {
   ResourceCreationError,
   ResourceRetrievalError,
@@ -61,9 +62,23 @@ const getServicesBySearchTermService = asyncHandler(async (term) => {
   });
 });
 
+const getServicesByCategoryService = asyncHandler(async (category) => {
+    // const categorySlug = req.params.category;
+    // console.log(category)
+    // const cat = await Category.find({slug: category});
+    // if(cat.length == 0)
+    // res.status(404).json({message: `Invalid Category`})
+    try {
+      return await Service.find({"categories":{ $elemMatch: {"slug": category} }});
+    } catch (error) {
+      throw new ResourceRetrievalError(`No services found!`);
+    }
+  });
+
 export {
   createServiceService,
   getAllServicesService,
   getServiceBySlugService,
   getServicesBySearchTermService,
+  getServicesByCategoryService
 };

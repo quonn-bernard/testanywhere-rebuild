@@ -1,8 +1,7 @@
 import asyncHandler from "express-async-handler";
 import {
   getAllCategoriesService,
-  createCategoryService,
-  getServicesByCategoryService,
+  createCategoryService
 } from "../services/categoryService.js";
 import Category from "../models/categoryModel.js";
 
@@ -29,17 +28,17 @@ const addCategories = asyncHandler(async (req, res) => {
   }
 });
 
-const getServicesByCategory = asyncHandler(async (req, res) => {
-  const slug = req.params.slug;
-  const cat = await Category.find({slug: slug});
-  if(cat.length == 0)
-  res.status(404).json({message: `Invalid Slug`})
-  try {
-    const services = await getServicesByCategoryService(slug);
-    res.status(200).json(services);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
-});
+// const getServicesByCategory = asyncHandler(async (req, res) => {
+//   const slug = req.params.slug;
+//   const cat = await Category.find({slug: slug});
+//   if(cat.length == 0)
+//   res.status(404).json({message: `Invalid Slug`})
+//   try {
+//     const services = await getServicesByCategoryService(slug);
+//     res.status(200).json(services);
+//   } catch (error) {
+//     res.status(404).json({ message: error.message });
+//   }
+// });
 
-export { getAllCategories, addCategories, getServicesByCategory };
+export { getAllCategories, addCategories };

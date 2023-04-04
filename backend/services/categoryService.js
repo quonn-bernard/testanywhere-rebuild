@@ -22,16 +22,15 @@ const createCategoryService = asyncHandler(async ({name, slug}) => {
   }
 });
 
-const getServicesByCategoryService = asyncHandler(async (slug) => {
-  try {
-    return await Service.find({"categories":{ $elemMatch: {"slug": slug} }});
-  } catch (error) {
-    throw new ResourceRetrievalError(`No services found!`);
-  }
-});
+// const getServicesByCategoryService = asyncHandler(async (slug) => {
+//   try {
+//     return await Service.find({"categories":{ $elemMatch: {"slug": slug} }});
+//   } catch (error) {
+//     throw new ResourceRetrievalError(`No services found!`);
+//   }
+// });
 
 export {
   getAllCategoriesService,
-  createCategoryService,
-  getServicesByCategoryService,
+  createCategoryService
 };
