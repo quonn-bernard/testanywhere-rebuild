@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = process.env.REACT_APP_API_SVC_URL;
+const url = '/services/';
 
 export const getAllServices = async () => {
     const response = await axios.get(url)
