@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import CatgeoryServicesTemplate from "./pages/ServicesListByCategoryPage";
 import ServicesTemplate from "./pages/SingleServicePage.js"
 import Search from "./components/Forms/Search";
+import AppointmentSchedulingPage from "./pages/AppointmentScheduling/AppointmentSchedulingPage";
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/categories/:slug" element={<CatgeoryServicesTemplate />} />
             <Route path="/services/:slug" element={<ServicesTemplate />} />
+            <Route path="/appointments/schedule-appointment" element={<AppointmentSchedulingPage />} />
+
           </Routes>
         </div>
       </Router>

@@ -1,0 +1,34 @@
+.fc-event {
+    font-size: .5rem;
+    background-color: transparent;
+    padding: 10px;
+    border: none;
+    outline: none;
+}
+
+.fc-daygrid-event {
+    white-space: normal;
+    font-size: .75rem;
+}
+
+.fc-daygrid-day-frame:has(.fc-event-title) {
+    background-color: black;
+    cursor: not-allowed;
+}
+
+.fc-daygrid-day-frame:has(.fc-event-title) .fc-daygrid-day-top {
+    display: none;
+}
+
+.fc-daygrid-day-frame {
+    padding: 0;
+    cursor: pointer;
+}
+
+.fc-highlight{
+    background: #329795!important;
+}
+
+.fc-daygrid-day.fc-day-today{
+    background: rgba(3, 242, 3, 0.75)!important;
+}

@@ -1,12 +1,12 @@
 import asyncHandler from "express-async-handler";
 import emailValidator from "email-validator";
-import PasswordValidator from "password-validator";
 import passwordvalidator from "password-validator";
+import { InputValidationError } from "../customErrors/generalErrors.js";
 const pwSchema = new passwordvalidator();
 
 //requires 'fname lname' format
 export const isNameInputValid = (flName) => {
-  const regexName = new RegExp(/^[a-zA-Z]+ [a-zA-Z]+$/);
+  const regexName = new RegExp(/^[A-Z]+[a-zA-Z]{1,19}$/);
   return regexName.test(flName);
 };
 
@@ -60,3 +60,18 @@ export const isPasswordValid = (password) => {
     .spaces();
   return passwordValidationSchema.validate(password);
 };
+
+export const isAppointmentInputValid = (data) => {
+  if(!isNameInputValid(data.fname))
+  throw new InputValidationError(`Invalid input: fname`);
+  if(!isNameInputValid(data.lname))
+  throw new InputValidationError(`Invalid input: lname`);
+  if(!isEmailValid(data.email))
+  throw new InputValidationError(`Invalid input: email`);
+  if(!isPhoneNumberValid(data.phone))
+  throw new InputValidationError(`Invalid input: phone number`);
+  if(!isDateValid(data.date))
+  throw new InputValidationError(`Invalid input: date`);
+  if(!isTimeValid(data.time))
+  throw new InputValidationError(`Invalid input: time`);
+}

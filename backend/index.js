@@ -8,6 +8,7 @@ dotenv.config();
 import userRouter from "./routes/userRoutes.js";
 import categoryRouter from "./routes/categoryRoutes.js";
 import serviceRouter from "./routes/ServiceRoutes.js";
+import appointmentRouter from "./routes/appointmentRoutes.js";
 import { fileURLToPath } from "url";
 
 const PORT = process.env.PORT;
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/categories", categoryRouter);
 app.use("/users", userRouter);
 app.use("/services", serviceRouter);
+app.use("/appointments", appointmentRouter);
 
 // Serve frontend site
 if (process.env.NODE_ENV === "production") {
