@@ -1,12 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllCategories } from "../features/categories/categoriesSlice";
 import { Text } from "@chakra-ui/layout";
-import { Link, Box } from "@chakra-ui/react";
 import CategoryLink from "../components/CategoryLink";
-import Search from "../components/Forms/Search";
+import { render } from "react-dom";
 
 const Home = () => {
+  const renderRef = useRef(null)
   const dispatch = useDispatch();
   const { categories, isLoading, isError, message } = useSelector(
     (state) => state.categories
@@ -16,8 +16,11 @@ const Home = () => {
     if (isError) {
       console.log(message);
     }
-    dispatch(getAllCategories());
-  }, [dispatch, isError, message]);
+    if(renderRef.current !== null){
+      dispatch(getAllCategories());
+    }
+    renderRef.current = 1
+  }, []);
 
   if (isLoading) {
     return <p>Loading...</p>;

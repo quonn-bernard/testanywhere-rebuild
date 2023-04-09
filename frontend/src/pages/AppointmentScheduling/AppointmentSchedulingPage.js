@@ -29,6 +29,7 @@ import { FormControl, Input, FormLabel, Button } from "@chakra-ui/react";
 import { createNewAppointment } from "../../features/appointments/appointmentsSlice.js";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import convertTo12hrBasedTimes from "../../utils/converters/convertTimeTo12hrFormat.js";
 import "react-toastify/dist/ReactToastify.css";
 import "./style.css";
 
@@ -59,17 +60,13 @@ const AppointmentSchedulingPage = () => {
 
   const navigate = useNavigate();
 
-  const notify = () => toast.error("Only future dates are valid!");
-  const randomId = function (length = 6) {
-    return Math.random()
-      .toString(36)
-      .substring(2, length + 2);
-  };
-
-  const validate = (values) => {
+  const incompleteFormToast = () => toast.error("Only future dates are valid!");
+  
+  const validateAppointmentFormInputs = (values) => {
     const errors = {};
 
     const regexName = new RegExp(/^[A-Z]+[a-zA-Z]{1,19}$/);
+
     const regexPhone = new RegExp(
       /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
     );
@@ -104,13 +101,10 @@ const AppointmentSchedulingPage = () => {
     }
 
     if (!regexDate.test(date)) {
-      console.log(date);
       errors.date = "Date is Required";
     }
 
     if (!regexTime.test(time)) {
-      console.log(values.time);
-      console.log(!values.time);
       errors.time = "Time Required";
     }
     return errors;
@@ -118,14 +112,14 @@ const AppointmentSchedulingPage = () => {
 
   const formik = useFormik({
     initialValues: {
-      fname: "Re",
-      lname: "Test",
-      email: `${randomId()}@email.com`,
-      phone: "1111111111",
+      fname: "",
+      lname: "",
+      email: "",
+      phone: "",
       date: "",
       time: "",
     },
-    validate,
+    validateAppointmentFormInputs,
     onSubmit: (values, { resetForm }) => {
       if (
         !JSON.parse(localStorage.getItem("serviceID")) ||
@@ -168,6 +162,7 @@ const AppointmentSchedulingPage = () => {
   const dispatch = useDispatch();
 
   const fetchedTimesRef = useRef(false);
+  
   const { openAppointmentTimes, isLoading, isError, message } = useSelector(
     (state) => state.appointments
   );
@@ -198,28 +193,7 @@ const AppointmentSchedulingPage = () => {
     dispatch(getAppointmentTimes({ date: date }));
   };
 
-  const convertTo12hrBasedTimes = (time) => {
-    let part1, part2;
-    let convertedTime;
-    if (time > 1259) {
-      convertedTime = time - 1200;
-      part1 = convertedTime.toString().slice(0, 1) + `:`;
-      part2 = convertedTime.toString().slice(1) + ` P.M.`;
-      convertedTime = part1 + part2;
-    } else if (time < 1200) {
-      convertedTime = time;
-      part1 = convertedTime.toString().slice(0, 2) + `:`;
-      part2 = convertedTime.toString().slice(2) + ` A.M.`;
-      convertedTime = part1 + part2;
-    } else {
-      convertedTime = time;
-      part1 = convertedTime.toString().slice(0, 2) + `:`;
-      part2 = convertedTime.toString().slice(2) + ` P.M.`;
-      convertedTime = part1 + part2;
-    }
-
-    return convertedTime;
-  };
+  
 
   useEffect(() => {
     dispatch(
@@ -254,7 +228,7 @@ const AppointmentSchedulingPage = () => {
     var clickedDate = getDateWithoutTime(new Date(clickInfo.date));
     var nowDate = getDateWithoutTime(new Date());
     if (clickedDate < nowDate) {
-      notify();
+      incompleteFormToast();
       return;
     }
 
@@ -288,7 +262,7 @@ const AppointmentSchedulingPage = () => {
     return dt;
   }
 
-  const handleTimeCLick = (info) => {
+  const handleTimeClick = (info) => {
     setTime((prev) => info);
     localStorage.setItem("time", info);
   };
@@ -452,7 +426,7 @@ const AppointmentSchedulingPage = () => {
                             display={"block"}
                             key={index}
                             mb={3}
-                            onClick={() => handleTimeCLick(time)}
+                            onClick={() => handleTimeClick(time)}
                           >
                             <Badge
                               borderRadius={"5px"}
@@ -485,7 +459,7 @@ const AppointmentSchedulingPage = () => {
                             display={"block"}
                             key={index}
                             mb={3}
-                            onClick={() => handleTimeCLick(time)}
+                            onClick={() => handleTimeClick(time)}
                           >
                             <Badge
                               borderRadius={"5px"}
@@ -541,7 +515,7 @@ const AppointmentSchedulingPage = () => {
                       name="date"
                       type="text"
                       onChange={formik.handleChange}
-                      value={date}
+                      value={new Date(date).toString().split("").slice(0, -42).join("")}
                     />
                     {formik.errors.date ? (
                       <Text color="red">{formik.errors.date}</Text>
@@ -552,7 +526,7 @@ const AppointmentSchedulingPage = () => {
                       name="time"
                       type="text"
                       onChange={formik.handleChange}
-                      value={time}
+                      value={convertTo12hrBasedTimes(time)}
                     />
                     {formik.errors.time ? (
                       <Text color="red">{formik.errors.time}</Text>

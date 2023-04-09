@@ -30,5 +30,6 @@
 }
 
 .fc-daygrid-day.fc-day-today{
-    background: rgba(3, 242, 3, 0.75)!important;
+    background: transparent!important;
+    border: 2px solid #009cab;
 }

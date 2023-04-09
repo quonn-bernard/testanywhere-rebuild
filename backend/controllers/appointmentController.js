@@ -7,8 +7,12 @@ import {
   deleteAppointment,
   getAvailableTimes,
   getUnavailableDates,
+  sendAppointmentConfirmationEmail
 } from "../services/appointmentsService.js";
 import { response } from "express";
+import sendEmail from "../utils/email/sendemail.js";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 const retrieveAppointments = asyncHandler(async (req, res) => {
   const appointments = await getAllAppointments();
@@ -48,6 +52,7 @@ const addAppointment = asyncHandler(async (req, res) => {
 
   try {
     const appointment = await createAppointment(req.body);
+    sendAppointmentConfirmationEmail(req.body.fname, req.body.lname, req.body.email, req.body.date, req.body.time)
     res.status(200).json(appointment);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -82,34 +87,30 @@ const deleteAppointmentByID = asyncHandler(async (req, res) => {
 const retrieveUnavailableAppointmentDates = asyncHandler(async (req, res) => {
   const month = req.body.month;
   const year = req.body.year;
-  console.log(month, year)
-  try{
-  const appointments = await Appointment.find({
-    $expr: {
-      $and: [
-        {
-          $eq: [
-            {
-              $month: "$date",
-            },
-            3,
-          ],
-        },
-        {
-          $eq: [
-            {
-              $year: "$date",
-            },
-            2020,
-          ],
-        },
-      ],
-    },
-  });
-  console.log(appointments)
-}catch(error){
-  
-}
+  try {
+    const appointments = await Appointment.find({
+      $expr: {
+        $and: [
+          {
+            $eq: [
+              {
+                $month: "$date",
+              },
+              3,
+            ],
+          },
+          {
+            $eq: [
+              {
+                $year: "$date",
+              },
+              2020,
+            ],
+          },
+        ],
+      },
+    });
+  } catch (error) {}
   response.status(200).json({ data: month });
 });
 

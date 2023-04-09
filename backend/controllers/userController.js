@@ -11,7 +11,6 @@ dotenv.config();
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
-  console.log(name);
   try {
     const user = await createUserService({ name, email, password });
     res.status(201).json(user);

@@ -13,7 +13,8 @@ import {
   ResourceRetrievalError,
 } from "../utils/customErrors/generalErrors.js";
 import { isAppointmentInputValid } from "../utils/validators/validateFormInputs.js";
-// import sendEmail from "../utils/sendEmail/sendEmail.js";
+import sendEmail from "../utils/email/sendemail.js";
+import convertTo12hrBasedTimes from "../utils/converters/convertTo12hrBasedTime.js";
 import * as dotenv from "dotenv";
 dotenv.config();
 import { generateApptTimes } from "../utils/generators/availableTimesGenerator.js";
@@ -78,8 +79,7 @@ const updateAppointment = asyncHandler(
 );
 
 const getAvailableTimes = asyncHandler(async (date) => {
-  console.log(date)
-  const times = generateApptTimes(1000, 1600, 30)
+  const times = generateApptTimes(1000, 1600, 30);
   const appointments = await Appointment.find({ date: date });
   let availableTimes;
   const excludedTimes = appointments.map((appt) => {
@@ -100,9 +100,28 @@ const deleteAppointment = asyncHandler(async (appointment) => {
 });
 
 const getUnavailableDates = asyncHandler(async (month) => {
-  console.log(month)
   const appointments = await Appointment.find({ slug: slug });
-})
+});
+
+const sendAppointmentConfirmationEmail = (fname, lname, email, date, time) => {
+  time = convertTo12hrBasedTimes(time)
+  date = new Date(date).toString().split("").slice(0, -42).join("");
+  const subject = "Appointment Request" 
+  try {
+    sendEmail({
+      to: email,
+      from: {
+        email: process.env.ADMIN_EMAIL,
+        name: "Test Anywhere Lab",
+      },
+      subject: subject,
+      dynamic_template_data: { fname, lname, date, time },
+      template_id: "d-5facc65f61da4483929971a07caced34",
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 export {
   createAppointment,
@@ -110,5 +129,6 @@ export {
   updateAppointment,
   deleteAppointment,
   getAvailableTimes,
-  getUnavailableDates
+  getUnavailableDates,
+  sendAppointmentConfirmationEmail,
 };
