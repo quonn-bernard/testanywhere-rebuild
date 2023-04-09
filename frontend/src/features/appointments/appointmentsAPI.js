@@ -13,7 +13,6 @@ export const getAvailableAppointmentTimes = async (date) => {
 }
 
 export const getUnavailableAppointmentDates = async (data) => {
-    console.log(data.month, data.year)
     const response = await axios.post(url + "unavailable-dates", data)
     return response.data
 }

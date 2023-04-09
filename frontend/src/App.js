@@ -22,7 +22,6 @@ function App() {
             <Route path="/categories/:slug" element={<CatgeoryServicesTemplate />} />
             <Route path="/services/:slug" element={<ServicesTemplate />} />
             <Route path="/appointments/schedule-appointment" element={<AppointmentSchedulingPage />} />
-
           </Routes>
         </div>
       </Router>

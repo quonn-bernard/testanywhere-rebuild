@@ -1,10 +1,12 @@
 import asyncHandler from "express-async-handler";
 import {
   getAllCategoriesService,
-  createCategoryService
+  createCategoryService,
 } from "../services/categoryService.js";
+import sendEmail from "../utils/email/sendemail.js";
 
 const getAllCategories = asyncHandler(async (req, res) => {
+
   try {
     const categories = await getAllCategoriesService();
     res.status(200).json(categories);
