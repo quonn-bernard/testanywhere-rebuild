@@ -1,18 +1,17 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Registration from "./pages/Registration";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import Login from "./pages/Login";
 import Navbar from "./components/Navbar";
 import CatgeoryServicesTemplate from "./pages/ServicesListByCategoryPage";
 import ServicesTemplate from "./pages/SingleServicePage.js"
-import Search from "./components/Forms/Search";
 import AppointmentSchedulingPage from "./pages/AppointmentScheduling/AppointmentSchedulingPage";
+import Search from "./components/Forms/Search.js";
 
 function App() {
   return (
     <>
       <Router>
-        <div className="container">
           <Navbar />
           <Search />
           <Routes>
@@ -23,7 +22,6 @@ function App() {
             <Route path="/services/:slug" element={<ServicesTemplate />} />
             <Route path="/appointments/schedule-appointment" element={<AppointmentSchedulingPage />} />
           </Routes>
-        </div>
       </Router>
     </>
   );

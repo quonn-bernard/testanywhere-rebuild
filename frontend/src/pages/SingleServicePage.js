@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Text, Box } from "@chakra-ui/layout";
+import { Button } from "@chakra-ui/react";
 import { getLabServiceBySlug } from "../features/services/servicesSlice";
 import SingleService from "../components/SingleService";
-import DefaultButton from "../components/Buttons/DefaultButton";
 
 const Service = () => {
   const dispatch = useDispatch();
@@ -44,8 +44,7 @@ const Service = () => {
       ) : (
         <Text>No services found to display!...</Text>
       )}
-
-      <DefaultButton text="Schedule a Lab Test" cb={handleClick} />
+      <Button  onClick={handleClick} >Schedule a Lab Test</Button>
     </>
   );
 };
