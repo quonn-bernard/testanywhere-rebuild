@@ -6,7 +6,7 @@ import {
   ListItem,
   UnorderedList,
 } from "@chakra-ui/layout";
-import CategoryLink from "./CategoryLink";
+import ResourceLink from "./ResourceLink";
 
 const SingleService = (service) => {
   service = service.service;
@@ -25,7 +25,7 @@ const SingleService = (service) => {
         {service.categories.map((cat) => {
           return (
             <Badge key={cat._id} mr={3}>
-              <CategoryLink category={cat} />
+              <ResourceLink resource={cat} />
             </Badge>
           );
         })}
